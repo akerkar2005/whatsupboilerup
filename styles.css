@@ -24,7 +24,6 @@ GREY COLOR: #343a40
   body {
     font-family: "Rubik", sans-serif;
     color: #343a40;
-    border-bottom: 8px solid #087f5b;
   }
   
   .container {
@@ -34,7 +33,7 @@ GREY COLOR: #343a40
   
   header,
   section {
-    margin-bottom: 96px;
+    margin-bottom: 48px;
   }
   
   h2 {
@@ -90,8 +89,8 @@ GREY COLOR: #343a40
   header {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 80px;
-    margin-top: 64px;
+    column-gap: 40px;
+    margin-top: 48px; 
   }
   
   .header-text-box {
@@ -136,38 +135,8 @@ GREY COLOR: #343a40
     line-height: 1.7;
   }
   
-  /* TESTIMONIAL */
-  .testimonial-section {
-    background-color: #087f5b;
-    color: #fff;
-    padding: 24px;
-    border-radius: 12px;
-  }
   
-  .testimonial-box {
-    grid-column: 2 / -1;
-    align-self: center;
-  }
-  
-  .testimonial-box h2 {
-    margin-bottom: 24px;
-    /* 20 / 24 / 30 */
-    font-size: 24px;
-  }
-  
-  .testimonial-text {
-    font-style: italic;
-    margin-bottom: 24px;
-    font-size: 18px;
-    line-height: 1.7;
-    color: ##e6fcf5;
-  }
-  
-  .testimonial-author {
-    color: #c3fae8;
-  }
-  
-  /* CHAIRS */
+  /* EVENT */
   .event {
     box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.07);
     border-radius: 12px;
@@ -222,22 +191,26 @@ GREY COLOR: #343a40
     color: #495057;
   }
 
+  .logo {
+    height: 2.8em;
+  }
+  
+
   .navigation {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #fdf2e9;
-  
     /* Because we want header to be sticky later */
-    height: 2.4rem;
-    padding: 0 2.4rem;
-    position: relative;
+    height: 1.2rem;
+    padding: 0 1rem;
+    position:static
   }
   .main-nav-list {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 2.4rem;
+    gap: 4.8rem;
   }
   
   .main-nav-link:link,
@@ -246,26 +219,13 @@ GREY COLOR: #343a40
     text-decoration: none;
     color: #333;
     font-weight: 500;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     transition: all 0.3s;
   }
   
   .main-nav-link:hover,
   .main-nav-link:active {
     color: #cf711f;
-  }
-  
-  .main-nav-link.nav-cta:link,
-  .main-nav-link.nav-cta:visited {
-    padding: 1.2rem 2.4rem;
-    border-radius: 9px;
-    color: #fff;
-    background-color: #e67e22;
-  }
-  
-  .main-nav-link.nav-cta:hover,
-  .main-nav-link.nav-cta:active {
-    background-color: #cf711f;
   }
   
   /* MOBILE */
