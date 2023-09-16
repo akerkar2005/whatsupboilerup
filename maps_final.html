@@ -21,6 +21,27 @@
         crossorigin=""></script>
     </head>
     <body>
+            <div class="container">
+              <header class="navigation">
+                <a href="#">
+                  <img class="logo" alt="What's Up Logo logo" src="img/map-pin-line.svg" />
+                </a>
+          
+                <nav class="main-nav">
+                  <ul class="main-nav-list">
+                    <li><a class="main-nav-link" href="Home.html">Home</a></li>
+                    <li><a class="main-nav-link" href="maps_final.html">Map</a></li>
+                    <li><a class="main-nav-link" href="#">Filters</a></li>
+                    <li><a class="main-nav-link" href="About.html">About</a></li>
+                  </ul>
+                </nav>
+          
+                <button class="btn-mobile-nav">
+                  <ion-icon class="icon-mobile-nav" name="menu-outline"></ion-icon>
+                  <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+                </button>
+              </header>
+          </div>
         <div id="map">
             <script>
                 var map = L.map('map').setView([40.427075, -86.920077], 16);
