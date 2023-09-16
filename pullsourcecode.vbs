@@ -17,8 +17,13 @@ End Function
 
 Dim rss_source  
 rss_source =  GetSourceCode("https://boilerlink.purdue.edu/events.rss")
-Dim fso, ResultFile
+Dim fso, ResultFile, scriptdir
    Set fso = CreateObject("Scripting.FileSystemObject")
-   Set ResultFile = fso.CreateTextFile ("c:\Users\kanud\Downloads\akerkar2005.github.io\results.txt", True)
+   
+   scriptdir = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.ScriptFullName)
+
+    Wscript.Echo scriptdir
+
+   Set ResultFile = fso.CreateTextFile (scriptdir + "\results.txt", True)
    ResultFile.WriteLine(rss_source)
    ResultFile.Close
