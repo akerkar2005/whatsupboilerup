@@ -14,10 +14,11 @@ Function GetSourceCode(url)
 
      GetSourceCode = objHttp.responseText
 End Function
+
 Dim rss_source  
 rss_source =  GetSourceCode("https://boilerlink.purdue.edu/events.rss")
 Dim fso, ResultFile
    Set fso = CreateObject("Scripting.FileSystemObject")
-   Set ResultFile = fso.CreateTextFile("~\akerkar2005.github.io\results.txt", True)
+   Set ResultFile = fso.CreateTextFile ("c:\Users\kanud\Downloads\akerkar2005.github.io\results.txt", True)
    ResultFile.WriteLine(rss_source)
    ResultFile.Close
