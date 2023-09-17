@@ -20,11 +20,35 @@
 .about-us-img{
   width:300px;
   height:300px;
+  border-radius: 50%;
+  transition: transform .4s;
 }
 
+.about-us-img-reverse{
+  width:300px;
+  height:300px;
+  border-radius: 50%;
+  transition: transform .4s;
+}
+
+.about-us-img:hover{
+  transform:scale(1.2);
+  border-radius: 50%;
+  filter: drop-shadow(16px 16px 16px #8e6f3e);
+}
+.about-us-img-reverse:hover{
+  transform:scale(1.2);
+  border-radius: 50%;
+  filter: drop-shadow(-16px -16px 16px #8e6f3e);
+}
 
 .buttons-about-us{
   display: flex;
   flex-direction: row;
   gap: 2.4rem;
+}
+
+.why-we-made-text{
+  line-height: 1.7rem;
+  font-weight: 500;
 }
