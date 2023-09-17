@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/img/Frame 2.png">
+
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
@@ -18,18 +18,20 @@
         crossorigin=""/>
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-        crossorigin=""></script>
+        crossorigin="">
+      </script>
+      <script src="Control.Geocoder.js"></script>
     </head>
     <body>
             <div class="container">
               <header class="navigation">
-                <a href="index.html">
-                  <img class="logo" alt="What's Up logo" src="img/Frame 2.png" style="width:4rem; height:4rem;" />
+                <a href="#">
+                  <img class="logo" alt="What's Up Logo logo" src="img/map-pin-line.svg" />
                 </a>
           
                 <nav class="main-nav">
                   <ul class="main-nav-list">
-                    <li><a class="main-nav-link" href="index.html">Home</a></li>
+                    <li><a class="main-nav-link" href="Home.html">Home</a></li>
                     <li><a class="main-nav-link" href="maps_final.html">Map</a></li>
                     <li><a class="main-nav-link" href="#">Filters</a></li>
                     <li><a class="main-nav-link" href="About.html">About</a></li>
@@ -42,7 +44,7 @@
                 </button>
               </header>
           </div>
-        <div id="map">
+          <div id="map">
             <script>
                 var map = L.map('map').setView([40.427075, -86.920077], 16);
                 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -52,11 +54,57 @@
                 }).addTo(map);
                 x = window.innerWidth;
                 y = window.innerHeight;
-                document.getElementById("map").style.height = (y * 0.75).toString() + "px";
+                document.getElementById("map").style.height = (y).toString() + "px";
                 document.getElementById("map").style.width = (x).toString() + "px";
                 map.invalidateSize();
-                var marker = L.marker([40.42748091070867, -86.91321281931104]).addTo(map);
-                var popup = L.popup().setLatLng([40.42748091070867, -86.91321281931104]).setContent("WALC").openOn(map);
+                const latitude = [40.42748091070867, 40.426572907954764];
+                const longitude = [-86.91321281931104, -86.9268885076182];
+                var myIcon = L.icon({
+                    iconUrl: 'img/Frame 2.png',
+                    iconSize: [30, 30]});
+                var marker = L.marker([latitude[0],longitude[0]], {icon: myIcon} ).addTo(map);
+                const popupOptions = {className: "event-box"};
+                const template =
+                    "<h3>This is an Example Event </h3>" +
+                    "<ul>class='details" +
+                    '<button  class="edit" id="buttonEdit" type="button">Edit</button>';
+                const markerLayer = marker.bindPopup(template, popupOptions);
+                map.addLayer(markerLayer);
+                markerLayer.bindPopup().openPopup();
+                //markerLayer.on('mouseover', function (e) {this.openPopup();});
+                //markerLayer.on('mouseout', function (e) {this.closePopup();});
+
+                let isClicked = false;
+                markerLayer.on({
+                    mouseover: function() {
+                    if(!isClicked) {
+                    this.openPopup()
+                    }
+                  },
+                mouseout: function() { 
+                    if(!isClicked) {
+                    this.closePopup()
+                    }
+                  },
+                click: function() {
+                isClicked = true
+                this.openPopup()
+                }
+})
+
+                mymap.on ({
+                    click: function() {
+                    isClicked = false
+                    },
+                    popupclose: function () {
+                    isClicked = false
+                    }
+                  })
+
+                //var marker2 = L.marker([latitude[1],longitude[1]]).addTo(map);
+                //marker2.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+
+                //geocoder = new L.Control.Geocoder.Nominatim();
             </script>
         </div>
         <script>
@@ -64,10 +112,9 @@
         window.onresize = function(event) {
             x = window.innerWidth;
             y = window.innerHeight;
-            document.getElementById("map").style.height = (y * 0.75).toString() + "px";
+            document.getElementById("map").style.height = (y).toString() + "px";
             document.getElementById("map").style.width = (x).toString() + "px";
         }
         </script>
     </body>
 </html>
-
