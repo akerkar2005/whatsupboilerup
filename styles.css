@@ -192,7 +192,9 @@ GREY COLOR: #343a40
   }
 
   .logo {
-    height: 2.8em;
+    width:4rem;
+    height:4rem;
+    margin-bottom: 2.55rem;
   }
   
 
@@ -246,3 +248,4 @@ GREY COLOR: #343a40
   .icon-mobile-nav[name="close-outline"] {
     display: none;
   }
+
