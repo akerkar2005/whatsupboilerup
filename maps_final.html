@@ -24,6 +24,7 @@
       <script src="Control.Geocoder.js"></script>
     </head>
     <body>
+        <script src = "loadinformation.js"></script>
             <div class="container">
               <header class="navigation">
                 <a href="index.html">
@@ -38,6 +39,12 @@
                     <li><a class="main-nav-link" href="About.html">About</a></li>
                   </ul>
                 </nav>
+          
+                <button class="btn-mobile-nav">
+                  <ion-icon class="icon-mobile-nav" name="menu-outline"></ion-icon>
+                  <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+                </button>
+              </header>
           </div>
           <div id="map">
             <script>
@@ -52,24 +59,31 @@
                 document.getElementById("map").style.height = (y).toString() + "px";
                 document.getElementById("map").style.width = (x).toString() + "px";
                 map.invalidateSize();
-                const latitude = [40.42748091070867, 40.426572907954764];
-                const longitude = [-86.91321281931104, -86.9268885076182];
-                var myIcon = L.icon({
-                    iconUrl: 'img/Frame 2.png',
-                    iconSize: [50, 50]});
-                var marker = L.marker([latitude[0],longitude[0]], {icon: myIcon} ).addTo(map);
-                const popupOptions = {className: "event-box"};
-                var customDescription = ` <figure class="event">
-          <img src="img/image-2.png" alt="Picture of People in the Foreground of a Sunsetr" />
-          <div class="event-box">
-            <h3>This is an Example Event </h3>
-            <ul class="event-details">
+
+                var myIcon = L.icon({iconUrl: 'img/Frame 2.png', iconSize: [50, 50]});
+
+                var latitudes = [40.42748091070867, 40.426572907954764];
+                var longitudes = [-86.91321281931104, -86.9268885076182];
+                var markers = [];
+                var popups = [];
+                console.log(title_array[0]);
+                for(var i = 0; i < 2; i++){
+                    var mark = L.marker([latitudes[i], longitudes[i]], {icon: myIcon});
+                    markers.push(mark);
+                    markers[i].addTo(map);
+
+                    var popupOptions = {className: "event-box", autoPan: false, closeButton: false};
+                    var customDescription = ` <figure class="event">
+                    <img src="img/image-2.png" alt="Picture of People in the Foreground of a Sunsetr" />
+                    <div class="event-box">
+                      <h2>` + title_array[i] + `</h2>
+                    <ul class="event-details">
               <li>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="event-icon"
                   fill="none"
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 15 15"
                   stroke="currentColor"
                 >
                   <path
@@ -80,14 +94,14 @@
                   />
                 </svg>
                 <!-- Span is a generic INLINE text element, it doesn't have any meaning. It's like a div element, but inline -->
-                <span>Time For Event</span>
+                <span>` + start_time[i] + " - " + end_time[i] `</span>
               </li>
               <li>
               <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="event-icon"
                   fill="none"
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 15 15"
                   stroke="currentColor"
                 >
                   <path
@@ -104,7 +118,7 @@
                 xmlns="http://www.w3.org/2000/svg"
                 class="event-icon"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 15 15"
                 stroke="currentColor"
               >
                 <path
@@ -122,7 +136,7 @@
                   xmlns="http://www.w3.org/2000/svg"
                   class="event-icon"
                   fill="none"
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 15 15"
                   stroke="currentColor"
                 >
                   <path
@@ -134,50 +148,50 @@
                 </svg>
                 <span>Description</span>
               </li>
-            </ul>
-            <div class="event-info">
-              <strong>Filter</strong>
-              <a href="#" class="btn btn--small">Learn More</a>
-            </div>
-          </div>
-        </figure>
-                  `;
-                const markerLayer = marker.bindPopup(customDescription);
+                    </ul>
+                   <div class="event-info">
+              <a href="https://boilerlink.purdue.edu/events" class="btn btn--small">Learn More</a>
+                    </div>
+                    </div>
+                    </figure>
+                    `;
+                    markers[i].bindPopup(customDescription,popupOptions).openPopup();
+                    //var title_tag = document.getElementsByTagName("h3")[i];
+                    //title_tag.innerHTML = title;
+                    
+                    //var markerLayer = marker.bindPopup(customDescription,popupOptions);
+                    //markerLayer.openPopup();
 
-                //markerLayer.on('mouseover', function (e) {this.openPopup();});
-                //markerLayer.on('mouseout', function (e) {this.closePopup();});
-
-                let isClicked = false;
-                markerLayer.on({
-                    mouseover: function() {
-                    if(!isClicked) {
-                    this.openPopup()
-                    }
-                  },
-                mouseout: function() { 
-                    if(!isClicked) {
-                    this.closePopup()
-                    }
-                  },
-                click: function() {
-                isClicked = true
-                this.openPopup()
-                }
-})
-
-                mymap.on ({
+                    //var markerLayer = marker.bindPopup(customDescription,popupOptions);
+                    //popups.push(markerLayer);
+                  }
+                  //var markerLayer = marker.bindPopup(customDescription,popupOptions);
+                  //markerLayer.openPopup();
+                  /*let isClicked = false;
+                    markerLayer.on({
+                        mouseover: function() {
+                        if(!isClicked) {
+                        this.openPopup()
+                        }
+                      },
+                    mouseout: function() { 
+                        if(!isClicked) {
+                        this.closePopup()
+                        }
+                      },
                     click: function() {
-                    isClicked = false
-                    },
-                    popupclose: function () {
-                    isClicked = false
-                    }
-                  })
-
-                //var marker2 = L.marker([latitude[1],longitude[1]]).addTo(map);
-                //marker2.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-
-                //geocoder = new L.Control.Geocoder.Nominatim();
+                    isClicked = true
+                    this.openPopup()
+                    }})
+                    mymap.on({
+                    
+                        click: function() {
+                        isClicked = false
+                        },
+                        popupclose: function () {
+                        isClicked = false
+                        }
+                      })*/
             </script>
         </div>
         <script>
