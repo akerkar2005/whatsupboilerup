@@ -15,7 +15,6 @@ GREY COLOR: #343a40
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #fdf2e9;
   }
   
   /* ------------------------ */
@@ -24,6 +23,7 @@ GREY COLOR: #343a40
   body {
     font-family: "Rubik", sans-serif;
     color: #343a40;
+    background-color: #fdf2e9;
   }
   
   .container {
