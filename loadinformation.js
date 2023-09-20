@@ -1,7 +1,14 @@
-const fs = require('fs')
+var final_export_array_three = [];
+alert("Please be patient. The map will take a few seconds to load the data from BoilerLink.")
+async function getArray() {
+    const resp = await fetch("https://boilerlink.purdue.edu/events.rss")
+    const data = await resp.text()
+    return data
+  }
+  
+async function main() {
+const results = await getArray() 
 var date = new Date();
-var currentYear = date.getFullYear().toString;
-const results = fs.readFileSync('./results.txt').toString()
 var result_array = results.split("<title>").slice(2, )
 for(i = 0; i < result_array.length; i++){
         result_array[i] = result_array[i].replace(/&nbsp;/g, " ");
@@ -160,7 +167,6 @@ for (var row = 0; row < result_array.length; row++){
 }
 
 
-console.log(final_export_array[34])
 
 
 const keywords = {
@@ -692,11 +698,6 @@ for(i = 0; i < final_export_array.length; i++){
                final_export_array_two.push(final_export_array[i]);
         }
 }
-for(i = 0; i < final_export_array_two.length; i++){
-
-
-        console.log(final_export_array_two[i][5])
-}
 
 
 const todays_date = new Date();
@@ -705,13 +706,99 @@ let todays_day = todays_date.getDate();
 
 var day_of_event;
 var end_date_of_event;
-final_export_array_three = [];
 for(i = 0; i < final_export_array_two.length; i++){
         end_date_of_event = final_export_array_two[i][2];
         day_of_event = end_date_of_event.substring(end_date_of_event.indexOf("/") + 1, end_date_of_event.lastIndexOf("/"));
-        if(parseInt(day_of_event) <= parseInt(todays_day)){
+        if(parseInt(day_of_event) <= parseInt(todays_day) + 2){
                 final_export_array_three.push(final_export_array_two[i]);
         } else {
                 break;
         }
 }
+
+var map = L.map('map').setView([40.427075, -86.920077], 16);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+maxZoom: 20,
+minZoom: 15,
+attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+x = window.innerWidth;
+y = window.innerHeight;
+document.getElementById("map").style.height = (y).toString() + "px";
+document.getElementById("map").style.width = (x).toString() + "px";
+map.invalidateSize();
+
+var myIcon = L.icon({iconUrl: 'img/Frame 2.png', iconSize: [50, 50]});
+latitudes = [];
+longitudes = [];
+for(i = 0; i < final_export_array_three.length; i++){
+    latitudes.push(parseFloat(final_export_array_three[i][5].substring(0, final_export_array_three[i][5].indexOf(","))));
+    longitudes.push(parseFloat(final_export_array_three[i][5].substring(final_export_array_three[i][5].indexOf(" ") + 1, final_export_array_three[i][5].length)));
+}
+var markers = [];
+var popups = [];
+for(var i = 0; i < final_export_array_three.length; i++){
+    var mark = L.marker([latitudes[i], longitudes[i]], {icon: myIcon});
+    markers.push(mark);
+    markers[i].addTo(map);
+
+    var popupOptions = {className: "event-box", autoPan: true, closeButton: false};
+    var customDescription = ` 
+    
+    <figure class="event">
+    <img src="img/Purdue_Placeholder.jpg" alt="Purdue Arch" />
+    <div class="event-box">
+      <h3>` + final_export_array_three[i][0] + `</h3>
+    <ul class="event-details">
+<li>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class="event-icon"
+  fill="none" 
+  viewBox="0 0 24 24"
+  stroke="currentColor"
+>
+  <path
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+  />
+</svg>
+
+<span>` + final_export_array_three[i][3] + " - " + final_export_array_three[i][4] + `</span>
+</li>
+<li>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class="event-icon"
+  fill="none"
+  viewBox="0 0 24 24"
+  stroke="currentColor"
+>
+  <path
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+  />
+</svg>
+<span>` + final_export_array_three[i][1] + " - " + final_export_array_three[i][2] +  `</span>
+</li>
+<li>
+                <span>` + final_export_array_three[i][6] + `</span>
+</li>
+
+    </ul>
+   <div class="event-info">
+<a href=" ` +  final_export_array_three[i][7] + ` " class="btn btn--small">Learn More</a>
+    </div>
+    </div>
+    </figure>
+    `;
+    markers[i].bindPopup(customDescription,popupOptions).openPopup();
+  }
+
+
+}
+main()
