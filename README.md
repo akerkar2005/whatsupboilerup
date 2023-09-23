@@ -16,4 +16,4 @@ The boiler link website formatting is currently too bloated. it is difficult for
 
 ## Challenges
 
-We had severe difficulty making the node.js file compatible with browser HTML during the 24 hour time constraint of the hackathon. Converting the file to vanilla and dynamically updating data is one of our goals moving into the future.
+We had severe difficulty making the node.js file compatible with browser HTML during the 24 hour time constraint of the hackathon. However, we found a way to scan the BoilerLink data from Vanilla JS itself using Fetch API. We also were sleep deprived as we stayed awake for the full 24 hours to work on the project.
