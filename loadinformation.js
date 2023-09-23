@@ -1,5 +1,5 @@
 var final_export_array_three = [];
-alert("Please be patient. The map will take a few seconds to load the data from BoilerLink.")
+alert("Please be patient. The map will take a few seconds to load the data from BoilerLink. Right click to open popups without closing a cluster.")
 async function getArray() {
     const resp = await fetch("https://boilerlink.purdue.edu/events.rss")
     const data = await resp.text()
@@ -735,17 +735,17 @@ for(i = 0; i < final_export_array_three.length; i++){
     latitudes.push(parseFloat(final_export_array_three[i][5].substring(0, final_export_array_three[i][5].indexOf(","))));
     longitudes.push(parseFloat(final_export_array_three[i][5].substring(final_export_array_three[i][5].indexOf(" ") + 1, final_export_array_three[i][5].length)));
 }
-var markers = [];
+
+var oms = new OverlappingMarkerSpiderfier(map);
 var popups = [];
+
 for(var i = 0; i < final_export_array_three.length; i++){
     var mark = L.marker([latitudes[i], longitudes[i]], {icon: myIcon});
-    markers.push(mark);
-    markers[i].addTo(map);
 
-    var popupOptions = {className: "event-box", autoPan: true, closeButton: false};
+    var popupOptions = {className: "event-box", autoPan: true, closeButton: true};
     var customDescription = ` 
     
-    <figure class="event">
+    <figure class="event">      
     <img src="img/Purdue_Placeholder.jpg" alt="Purdue Arch" />
     <div class="event-box">
       <h3>` + final_export_array_three[i][0] + `</h3>
@@ -796,9 +796,14 @@ for(var i = 0; i < final_export_array_three.length; i++){
     </div>
     </figure>
     `;
-    markers[i].bindPopup(customDescription,popupOptions).openPopup();
-  }
+    mark.bindPopup(customDescription,popupOptions).openPopup();
+    mark.on('contextmenu', function (e) { 
+        this.openPopup();
+    });
+    map.addLayer(mark);
+    oms.addMarker(mark);
 
+  }
 
 }
 main()
