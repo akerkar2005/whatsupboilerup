@@ -5,7 +5,7 @@
     "jsdom": "^22.1.0",
     "underscore": "^1.13.6"
   },
-  "name": "akerkar2005.github.io",
+  "name": "whatsupboilerup",
   "description": "Hello World 2023 webpage",
   "version": "1.0.0",
   "main": "loadinfo.js",
